@@ -4,9 +4,78 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>my-web</title>
+    <script src="./src/assets/vue.min.js"></script>
   </head>
+  <style>
+    .www{
+      background: #444;
+      color: #eee;
+    }
+  </style>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <div id="vue_det">
+      <h1>site : {{site}}</h1>
+      <h1>url : {{url}}</h1>
+      <!--<h1>{{details()}}</h1>-->
+    </div>
+    <div v-bind:id="dynamicId">ss</div>
+
+    <button v-bind:disabled="someDynamicCondition">Button</button>
+    <div id="col">
+      <label for="r1">修改颜色</label><input type="checkbox" v-model="www" id="r1">
+      <br><br>
+      <div v-bind:class="{'www': www}">
+        v-bind:class 指令
+      </div>
+    </div>
+
+    <div id="mod">
+      <input v-model="message">
+      <p>The input value is : {{message}}</p>
+    </div>
+    <script type="text/javascript">
+      var mod = new Vue({
+        el: '#mod',
+        data: {
+          message: 'model 初始值!'
+        }
+      })
+     /* var vm = new Vue({
+        el: '#vue_det',
+        data: {
+          site: "vue测试",
+          url: "www.runoob.com",
+          alexa: "10000"
+        },
+        methods: {
+          details: function() {
+            return  this.site + " - 学的不仅是技术，更是梦想！";
+          }
+        }
+      })*/
+
+     // 我们的数据对象
+     var data = { site: "测试数据对象", url: "www.wwww.com", alexa: 10000}
+     var vm = new Vue({
+       el: '#vue_det',
+       data: data
+     })
+     // 它们引用相同的对象！
+     document.write(vm.site === data.site) // true
+     document.write("<br>")
+
+     // 设置属性也会影响到原始数据
+     vm.site = "sss"
+     document.write(data.site + "<br>") // Runoob
+
+     var ww = new Vue({
+       el: '#col',
+       data:{
+         www: true
+       }
+     });
+    </script>
   </body>
 </html>
