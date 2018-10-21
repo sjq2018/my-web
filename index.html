@@ -1,81 +1,259 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>my-web</title>
-    <script src="./src/assets/vue.min.js"></script>
-  </head>
-  <style>
-    .www{
-      background: #444;
-      color: #eee;
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>my-web</title>
+  <script src="./src/assets/vue.min.js"></script>
+  <!--<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>-->
+
+</head>
+<style>
+  .www{
+    background: #444;
+    color: #eee;
+  }
+</style>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<div id="vue_det">
+  <h1>site : {{site}}</h1>
+  <h1>url : {{url}}</h1>
+  <!--<h1>{{details()}}</h1>-->
+</div>
+
+
+<div id="col">
+  <label for="r1">修改颜色</label><input type="checkbox" v-model="www" id="r1">
+  <br><br>
+  <div v-bind:class="{'www': www}">
+    v-bind:class 指令
+  </div>
+</div>
+
+<div id="mod">
+  <input v-model="message">
+  <p>The input value is : {{message}}</p>
+</div>
+<div  id="didi-nav">
+  <ul>
+    <li v-for="tab in tabs">
+      {{tab.text}}
+    </li>
+  </ul>
+</div>
+<!--指令测试-->
+  <div id="zhiling">
+  <p v-if="geting"><span style="color:red;">切换多个元素测试</span>如果是ture则展示 v-if是生成移除</p>
+</div>
+  <div id="zhiling1">
+    <p v-show="geting">v-show是展示隐藏元素本身不会消失</p>
+  </div>
+  <div id="zl">
+    <p v-if="ok">我是对的</p>
+    <p v-else="ok">我是错的 v-else通常和v-if一起使用，值为真的时候展示if，值为假的时候展示else</p>
+  </div>
+  <form id="fmold">
+    <p>表单v-model双向绑定用法</p>
+    姓名<input type="text" v-model="data.name" placeholder="">
+    <br>
+    性别<input type="radio" id="man" value="one" v-model="data.sex">
+    <label for="man">男</label>
+    <input type="radio" id="male" value="two" v-model="data.sex">
+    <label for="male">女</label>
+    <br>
+    兴趣
+    <input type="checkbox" id="book" value="book" v-model="data.interest">
+    <label for="book">读书</label>
+    <input type="checkbox" id="swim" value="swim" v-model="data.interest">
+    <label for="swim">游泳</label>
+    <input type="checkbox" id="game" value="game" v-model="data.interest">
+    <label for="game">游戏</label>
+    <input type="checkbox" id="song" value="song" v-model="data.interest">
+    <label for="song">唱歌</label>
+    <br>
+    <select v-model="data.identity">
+      <option value="teacher" selected>教师</option>
+      <option value="doctor" >医生</option>
+      <option value="lawyer">律师</option>
+    </select>
+  </form>
+  <div id="lzy">
+    <input  v-model="masg" lazy>
+    {{masg}}
+  </div>
+  <div id="yanchi">
+    <input v-model="masg" debounce="5000">
+    {{masg}}
+  </div>·
+<div id="bin">
+  <h2><a v-bind:href="url" v-bind:target="target">v-bind连接href测试</a></h2>
+</div>
+<div id="jisuan">
+  {{ message.split('').reverse().join('') }}
+  <!--split分隔。reverse翻转，join放入-->
+</div>
+<!--监听属性-->
+<div id = "jianting">
+  <p style = "font-size:25px;">计数器: {{ counter }}</p>
+  <button @click = "counter++" style = "font-size:25px;">点击增加计数1</button>
+</div>
+<div id = "computed_props">
+  千米 : <input type = "text" v-model = "kilometers">
+  米 : <input type = "text" v-model = "meters">
+</div>
+<p id="info"></p>
+<script type="text/javascript">
+  var km = new Vue({
+    el: '#computed_props',
+    data: {
+      kilometers : 0,
+      meters:0
+    },
+    methods: {
+    },
+    computed :{
+    },
+    watch : {
+      kilometers:function(val) {
+        this.kilometers = val;
+        this.meters = val * 1000;
+      },
+      meters : function (val) {
+        this.kilometers = val/ 1000;
+        this.meters = val;
+      }
     }
-  </style>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <div id="vue_det">
-      <h1>site : {{site}}</h1>
-      <h1>url : {{url}}</h1>
-      <!--<h1>{{details()}}</h1>-->
-    </div>
-    <div v-bind:id="dynamicId">ss</div>
+  });
+  // $watch 是一个实例方法
+  km.$watch('kilometers', function (newValue, oldValue) {
+    // 这个回调将在 vm.kilometers 改变后调用
+    document.getElementById ("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+  })
 
-    <button v-bind:disabled="someDynamicCondition">Button</button>
-    <div id="col">
-      <label for="r1">修改颜色</label><input type="checkbox" v-model="www" id="r1">
-      <br><br>
-      <div v-bind:class="{'www': www}">
-        v-bind:class 指令
-      </div>
-    </div>
+  //监听属性
+  var jt = new Vue({
+    el: '#jianting',
+    data: {
+      counter: 1
+    }
+  });
 
-    <div id="mod">
-      <input v-model="message">
-      <p>The input value is : {{message}}</p>
-    </div>
-    <script type="text/javascript">
-      var mod = new Vue({
-        el: '#mod',
-        data: {
-          message: 'model 初始值!'
-        }
-      })
-     /* var vm = new Vue({
-        el: '#vue_det',
-        data: {
-          site: "vue测试",
-          url: "www.runoob.com",
-          alexa: "10000"
-        },
-        methods: {
-          details: function() {
-            return  this.site + " - 学的不仅是技术，更是梦想！";
-          }
-        }
-      })*/
+  //计算属性字符串翻转
+  new Vue({
+    el: '#jisuan',
+    data: {
+      message: 'songjiqing!'
+    }
+  })
+  new Vue({
+    el: '#bin',
+    data: {
+      url: 'http://www.baidu.com',
+      target:'_blank'
+    }
+  })
+  //指令延迟
+  new Vue({
+    el:'#yanchi',
+    data:{
+      masg:'内容延迟改变'
+    }
+  })
+  //指令v-model lazy
+  new Vue({
+    el:'#lzy',
+    data:{
+      masg:'lazy属性没有生效'
+  }
+  })
+  //指令v-model
+  new Vue({
+    el:'#fmold',
+    data:{
+      data:{
+        name:'sss',
+        sex:'two',
+        interest:['book','swim'],
+        identity:'lawyer'
 
-     // 我们的数据对象
-     var data = { site: "测试数据对象", url: "www.wwww.com", alexa: 10000}
-     var vm = new Vue({
-       el: '#vue_det',
-       data: data
-     })
-     // 它们引用相同的对象！
-     document.write(vm.site === data.site) // true
-     document.write("<br>")
-
-     // 设置属性也会影响到原始数据
-     vm.site = "sss"
-     document.write(data.site + "<br>") // Runoob
-
-     var ww = new Vue({
-       el: '#col',
-       data:{
-         www: true
+      }
+    }
+  })
+  //指令v-else
+  new Vue({
+    el:'#zl',
+    data:{
+      ok:false,
+    }
+  })
+//指令v-if
+new Vue({
+  el:'#zhiling',
+  data:{
+    geting:true,
+  }
+})
+//指令v-show
+new Vue({
+  el:'#zhiling1',
+  data:{
+    geting:false,
+  }
+})
+  var mod = new Vue({
+    el: '#mod',
+    data: {
+      message: 'model 初始值!'
+    }
+  })
+  /* var vm = new Vue({
+     el: '#vue_det',
+     data: {
+       site: "vue测试",
+       url: "www.runoob.com",
+       alexa: "10000"
+     },
+     methods: {
+       details: function() {
+         return  this.site + " - 学的不仅是技术，更是梦想！";
        }
-     });
-    </script>
-  </body>
+     }
+   })*/
+
+  // 我们的数据对象
+  var data = { site: "测试数据对象", url: "www.wwww.com", alexa: 10000}
+  var vm = new Vue({
+    el: '#vue_det',
+    data: data
+  })
+  // 它们引用相同的对象！
+  document.write(vm.site === data.site) // true
+  document.write("<br>")
+
+  // 设置属性也会影响到原始数据
+  vm.site = "sss"
+  document.write(data.site + "<br>") // Runoob
+
+  var ww = new Vue({
+    el: '#col',
+    data:{
+      www: true
+    }
+  });
+  new Vue({
+    el:'#didi-nav',
+    data: {
+      tabs: [
+        {text: '小汽车'},
+        {text: '大巴车'},
+        {text: '挖掘机'},
+        {text: '铲车'},
+      ]
+
+    }
+  })
+</script>
+</body>
 </html>
