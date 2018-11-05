@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>my-web</title>
+  <script src="./src/assets/vue.min.js"></script>
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <style>
+    .active {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+    .bd{
+      width: 100px;
+      height: 100px;
+    background-color: #000;
+    }
+    .classone{
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+<div id="sty">
+  <div v-bind:class="{ active: isActive }">
+    v-bind样式属性绑定值为真则展示样式，为假则隐藏
+  </div>
+</div>
+<div id = "app">
+  <p style = "font-size:25px;">计数器: {{ counter }}</p>
+  <button @click = "counter++" style = "font-size:25px;">点我</button>
+</div>
+<div id="roots">
+  监听
+<input type="text" v-model.lazy="cityName"/>
+</div>
+<p>计算属性</p>
+<div id="exp">
+  <input type="text" v-model="didi">
+  <input type="text" v-model="flamy">
+  <br/>
+  didi={{didi}},flamy={{flamy}},didiflamy={{didiflamy}}
+
+</div>
+<p>计算机缓存属性</p>
+<div id="hc">
+  {{welcome}}
+  {{wetime}}
+</div>
+<div id="big">字母变大
+<span>{{hhdd|capitalize}}</span>
+</div>
+<div id="bid" class="bd" v-bind:class="{'classone':ones,'classtwo':twos}">
+
+</div>
+<script type = "text/javascript">
+  new Vue({
+    el:'#bid',
+    data:{
+      ones:true,
+      twos:false,
+    }
+  })
+  //简单的过滤器
+  Vue.filter('reverse',function (value) {
+    return value.split('').reverse().join();
+  })
+  function  capitalize(value) {
+if (!value && value !==0) return''
+    value =value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+    //改变第一个大小拼接剩下的
+  }
+  new Vue({
+    el:'#big',
+    data:{
+      hhdd:'gsongsong'
+    },
+    filters: {
+      capitalize: function (value) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
+    }
+  })
+
+
+  new Vue({
+    el:'#hc',
+    data:{
+      welcome:'欢迎进入'
+    },
+    computed:{
+      wetime:{
+        cache:false,
+        get:function () {
+          return Date.now()+this.welcome
+        }
+      }
+    }
+  })
+  var df=new Vue({
+    el:'#exp',
+    data:{
+      didi:'dd',
+      flamy:'ff'
+    },
+    computed:{
+      didiflamy:function () {
+        return this.didi+this.flamy
+
+      }
+    }
+  })
+  new Vue({
+    el: '#sty',
+    data: {
+      isActive: true
+    }
+  })
+  //监听的用法
+  new Vue({
+    el: '#roots',
+    data: {
+      cityName: 'shanghai'
+    },
+    watch: {
+      cityName(newName, oldName) {
+        alert('城市值的变化 :' + oldName + ' 变为 ' + newName );
+      }
+      }
+    })
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      counter: 1
+    }
+  });
+  vm.$watch('counter', function(nval, oval) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+  });
+
+  var s="shanghai";
+  s.length;
+  s.charAt(0);
+  s.substring(1,3);
+  s.slice(1.3);
+  s.indexOf("i");
+  s.lastIndexOf("i");
+  s.indexOf("i",3);
+  s.split("h");
+  s.repeat("h","H");
+  s.toUpperCase();
+  var q={x:1}
+  console.log(q);
+  q.x=2;
+  console.log(q);
+
+  var a=['a','b','c'];
+  var b=a;
+console.log(b)
+  a[0];
+</script>
+</body>
+</html>

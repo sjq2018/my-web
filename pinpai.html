@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>品牌</title>
+  <script src="./src/assets/vue.min.js"></script>
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <script src="axios.min.js"></script>
+  <link rel=" stylesheet" href="./src/assets/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+  <div class="">
+    <p>{{masg | masgFormat("疯狂")}}</p>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">添加品牌</h3>
+    </div>
+    <div class="panel-body form-inline">
+    <label>
+      ID:<input type="text" class="form-control" v-model="id">
+    </label>
+      <label>
+      Name:<input type="text" class="form-control" v-model="name">
+      </label>
+      <input type="button" value="添加" class="btn btn-primary" @click="add">
+      <label>
+        输入搜索关键词:<input type="text" class="form-control" v-model="keywords">
+      </label>
+    </div>
+
+  </div>
+<table class="table table-bordered table-hover table-striped">
+  <thead >
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Ctime</th>
+    <th>Operation</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!--search方法-->
+<tr v-for="item in search(keywords)" :key="item.id">
+  <td>{{item.id}}</td>
+  <td>{{item.name}}</td>
+  <td>{{item.ctime}}</td>
+  <td><a href="" @click.prevent="del(item.id)">删除</a> </td>
+</tr>
+  </tbody>
+</table>
+</div>
+<script>
+  //全局过滤器 第一个参数是过滤器名字，第二个是过滤器函数
+  Vue.filter("masgFormat",function (masg,ee){
+    //replace方法不知能填写变量，也能填写正则表达式
+   return  masg.replace(/单纯/g,ee)
+    }
+
+  );
+Vue.filter("",)
+
+  var vm=new Vue({
+    beforeCreate(){
+      var _this = this;
+      axios.get(' http://127.0.0.1:1555')
+        .then(function (response) {
+          console.log(response);
+          if(response.data.success){
+            _this.$data.list=response.data.data;
+          }
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+     // this.list
+    },
+    el:"#app",
+    data:{
+      id:'',
+      name:'',
+      keywords:'',
+      masg:'曾今的我也很单纯，单纯的我单纯的问，谁是世界上最单纯的人',
+   list:[]
+    },
+    methods:{
+      add(){
+      var car = {id:this.id,name:this.name,ctime:new Date()}
+      this.list.push(car);
+      },
+      del(id){
+        this.list.some((item,i)=>{
+          if(item.id==id){
+            this.list.splice(i,1);
+            return true;
+          }
+        })
+      },
+      search(keywords){
+        var newlist=[];
+        this.list.forEach(item =>{
+          if(item.name.indexOf(keywords)!=-1) {
+            newlist.push(item)
+          }
+        })
+        return newlist;
+      }
+    }
+  })
+</script>
+</body>
+</html>
