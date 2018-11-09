@@ -4,6 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
+import axios from 'axios'
+import $ from 'jquery'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
@@ -14,6 +18,8 @@ Vue.use(router)
 new Vue({
   el: '#app',
   router,
+  $,
+  axios,
   components: { App },
   template: '<App/>'
 })

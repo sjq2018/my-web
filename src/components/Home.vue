@@ -52,7 +52,7 @@
                   <i class="el-icon-menu"></i>
                   <span>导航五</span>
                 </template>
-                <el-menu-item index="5-1">选项1</el-menu-item>
+                <el-menu-item index="5-1"><router-link :to="{name: 'pinpai'}" >品牌</router-link></el-menu-item>
                 <el-menu-item index="5-2">选项2</el-menu-item>
               </el-submenu>
               <el-menu-item index="6">
@@ -118,10 +118,9 @@ export default {
     line-height: 200px;
   }
   .el-main {
-    background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 160px;
+    /* line-height: 160px; */
   }
   #homemain{
     position: relative;

@@ -45,7 +45,7 @@
 <tr v-for="item in search(keywords)" :key="item.id">
   <td>{{item.id}}</td>
   <td>{{item.name}}</td>
-  <td>{{item.ctime}}</td>
+  <td>{{item.ctime |dataFormat}}</td>
   <td><a href="" @click.prevent="del(item.id)">删除</a> </td>
 </tr>
   </tbody>
@@ -59,8 +59,15 @@
     }
 
   );
-Vue.filter("",)
-
+Vue.filter('dataFormat',function (dataStr) {
+  var dt=new Date(dataStr);
+  var yy=dt.getFullYear();
+  var mm=dt.getMonth()+1;
+  var dd=dt.getDate();
+  var hh=dt.getHours();
+  var ff=dt.getMinutes();
+  return yy+"/"+mm+"/"+dd;
+})
   var vm=new Vue({
     beforeCreate(){
       var _this = this;

@@ -1,8 +1,8 @@
 var http=require('http');
 var bus =[
-  {id:1,name:"奔驰1111",ctime:new Date()},
-  {id:2,name:"宝马2222",ctime:new Date()},
-  {id:3,name:"宾利3333",ctime:new Date()},
+  {id:1,name:"奔驰1",ctime:new Date()},
+  {id:2,name:"宝马2",ctime:new Date()},
+  {id:3,name:"宾利333",ctime:new Date()},
 ];
 var code={"code":"0","message":"",success:true};
 code.data=bus;

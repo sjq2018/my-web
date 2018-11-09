@@ -1,5 +1,5 @@
 <template>
-    <div style="color: white">我是seller</div>
+    <div style="color: black">我是seller</div>
 </template>
 
 <script>
